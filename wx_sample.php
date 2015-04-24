@@ -6,8 +6,8 @@
 //define your token
 define("TOKEN", "weixin");
 $wechatObj = new wechatCallbackapiTest();
-$wechatObj->valid();
-//$wechatObj->responseMsg();
+//$wechatObj->valid();
+$wechatObj->responseMsg();
 class wechatCallbackapiTest
 {
 	public function valid()
@@ -42,11 +42,21 @@ class wechatCallbackapiTest
 							<Content><![CDATA[%s]]></Content>
 							<FuncFlag>0</FuncFlag>
 							</xml>";             
-				if(!empty( $keyword ))
+				if( $keyword == "变")
                 {
               		$msgType = "text";
-                	$contentStr = "Welcome to wechat world!";
-                	$resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
+                	$contentStr = "看我变！";
+                	
+/**/
+			$conn = mysql_connect("localhost".":"."3306","root","thebestweare");
+			mysql_select_db("smart_home",$conn);
+			$result = mysql_query("select * from comd");
+			$row = mysql_fetch_array($result);
+                        $next_cmd = 1-(int)$row["cmd"];
+                        $query =sprintf("update comd set cmd ='%s' where id=1",(string)$next_cmd);
+                        mysql_query($query);
+/**/
+			$resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
                 	echo $resultStr;
                 }else{
                 	echo "Input something...";
