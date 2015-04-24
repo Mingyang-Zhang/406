@@ -32,7 +32,13 @@ class wechatCallbackapiTest
               	$postObj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
                 $fromUsername = $postObj->FromUserName;
                 $toUsername = $postObj->ToUserName;
-                $keyword = trim($postObj->Content);
+		
+		$type = $postObj->MsgType;
+                //echo $type;
+		$customevent = $postObj->Event;
+		//echo $customevent;	                
+
+		$keyword = trim($postObj->Content);
                 $time = time();
                 $textTpl = "<xml>
 							<ToUserName><![CDATA[%s]]></ToUserName>
@@ -41,13 +47,25 @@ class wechatCallbackapiTest
 							<MsgType><![CDATA[%s]]></MsgType>
 							<Content><![CDATA[%s]]></Content>
 							<FuncFlag>0</FuncFlag>
-							</xml>";             
-				if( $keyword == "变")
+							</xml>"; 
+/***/			
+		if($type=="event" and $customevent=="subscribe"){
+		  $contentStr = "你发送“变”，我就变哟！！";
+                  //echo $contentStr;
+		  $msgType = "text";
+                  $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
+                  echo $resultStr;
+		}
+
+/**/            
+		else if( !empty($keyword))
                 {
               		$msgType = "text";
+                        $contentStr = "你说“变”，我才变！！";
+                      if($keyword == "变") { 
                 	$contentStr = "看我变！";
                 	
-/**/
+/**/                   
 			$conn = mysql_connect("localhost".":"."3306","root","thebestweare");
 			mysql_select_db("smart_home",$conn);
 			$result = mysql_query("select * from comd");
@@ -56,6 +74,7 @@ class wechatCallbackapiTest
                         $query =sprintf("update comd set cmd ='%s' where id=1",(string)$next_cmd);
                         mysql_query($query);
 /**/
+			}
 			$resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
                 	echo $resultStr;
                 }else{
