@@ -6,8 +6,8 @@ if (!$con)
   die('Could not connect: ' . mysql_error());
  }
 mysql_select_db("smart_home",$con);
-mysql_query("INSERT INTO Pressure (pressure) 
-VALUES (100)");
+// mysql_query("INSERT INTO Pressure (pressure) 
+// VALUES (100)");
 $result = mysql_query("SELECT * FROM Pressure");
 
 while($row = mysql_fetch_array($result))
