@@ -6,10 +6,7 @@ if (!$con)
   die('Could not connect: ' . mysql_error());
  }
 mysql_select_db("smart_home",$con);
-$sql = "CREATE TABLE Pressure
-(
-pressure int
-)";
-mysql_query($sql,$con);
+mysql_query("INSERT INTO Pressure (pressure) 
+VALUES (100);
 mysql_close($con);
 ?>
