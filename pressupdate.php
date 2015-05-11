@@ -10,7 +10,7 @@ mysql_query("INSERT INTO Pressure (pressure)
 VALUES (100)");
 $result = mysql_query("SELECT * FROM Persons");
 
-while($row = mysql_fetch_array($result))
+while($row = mysql_fetch_array($con,$result))
   {
   echo $row['pressure'];
   echo "<br />";
