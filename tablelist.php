@@ -4,8 +4,7 @@ if (!$con)
  {
   die('Could not connect: ' . mysql_error());
  }
-mysql_select_db("smart_home",$con);
-$result = mysql_query("SHOW TABLES",$con);  
+$result = mysql_select_db("smart_home",$con);
 while($row = mysql_fetch_array($result))  
 {  
 echo $row[0]."";  
