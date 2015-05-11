@@ -5,6 +5,10 @@ if (!$con)
   die('Could not connect: ' . mysql_error());
  }
 $result = mysql_list_tables("smart_home");
+if(!$result)
+{
+ die('Cannot connect'); 
+}
 while($row = mysql_fetch_row($result))  
 {  
 echo $row[0]."";  
