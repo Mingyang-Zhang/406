@@ -10,9 +10,10 @@ if(!$result)
 {
  die('Cannot connect'); 
 }
-while($row = mysql_fetch_row($result))  
+while($row = mysql_fetch_array($result))  
 {  
 echo $row[0]."";  
 mysql_free_result($result);  
 }
+mysql_close($con);
 ?>
