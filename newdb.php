@@ -12,5 +12,5 @@ pressure int
 )";
 mysql_query($sql,$con);
 mysql_close($conn);
-echo "successful";
+echo "successfully";
 ?>
