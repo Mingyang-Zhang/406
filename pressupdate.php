@@ -15,5 +15,11 @@ while($row = mysql_fetch_array($result))
   echo $row['pressure'];
   echo "<br />";
   }
+ mysql_query("DELETE FROM Pressure WHERE pressure=100");
+ while($row = mysql_fetch_array($result))
+  {
+  echo $row['pressure'];
+  echo "<br />";
+  }
 mysql_close($con);
 ?>
