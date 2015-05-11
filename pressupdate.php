@@ -8,9 +8,9 @@ if (!$con)
 mysql_select_db("smart_home",$con);
 mysql_query("INSERT INTO Pressure (pressure) 
 VALUES (100)");
-$result = mysql_query("SELECT * FROM Persons");
+$result = mysql_query("SELECT * FROM Pressure");
 
-while($row = mysql_fetch_array($con,$result))
+while($row = mysql_fetch_array($result))
   {
   echo $row['pressure'];
   echo "<br />";
