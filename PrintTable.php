@@ -1,29 +1,40 @@
-<?php  
-    $conn=new mysqli("localhost","root","thebestweare");  
-    if($conn->connect_error) die("数据库连接失败".$conn->connect_error);  
-    $conn->select_db("php");  
-    $sql="select * from score";  
-    $result=$conn->query($sql);  
-    if(!$result) die("数据查询失败");  
-      
-    $row_num=$result->num_rows;  
-    $col_num=$result->field_count;  
-    echo"行数为:$row_num,列数为:$col_num";  
-    echo "<br/>";  
-      
-    echo "<table border=1><tr>";//表格  
-    while ($field=$result->fetch_field())  
-    {  
-        echo "<th>$field->name</th>";//$field的name属性..  
-    }  
-    echo "</tr>";  
-      
-    while($res=$result->fetch_row())  
-    {  
-        echo "<tr>";  
-        foreach($res as $val)  
-            echo "<th>$val</th>";  
-        echo "</tr>";  
-    }  
-    echo "</table>";  
-?>  
+<?php
+//根据表名，打出表头信息
+function show_table_info($table_name){
+$conn=mysql_connect("localhost","root","thebestweare");
+if(!$conn){
+die("数据库连接失败".mysql_error());
+}
+mysql_select_db("smart_home");
+$sql="select * from $table_name";
+$res=mysql_query($sql,$conn);
+if(!$res){
+die("查询失败".mysql_error());
+}
+//返回行记录
+$rows=mysql_affected_rows($conn);
+echo "行数".$rows;
+echo "<br/>";
+//返回列数
+$cols=mysql_num_fields($res);
+echo "列数".$cols;
+echo "<table border='1'>";
+//返回结果集当中字段的信息，每次取一个，循环的去取，一次取一列
+while($field_infor=mysql_fetch_field($res)){
+//name是指的列名
+//table该列所在的表名
+//max_length 该列最大长度
+echo "<th>".$field_infor->name."</th>";
+}
+while ($row=mysql_fetch_row($res)){
+echo "<tr>";
+foreach ($row as $key=>$val){
+echo "<td>$val</td>";
+}
+echo "</tr>";
+}
+echo "<table>";
+mysql_free_result($res);
+}
+show_table_info("Pressure");
+?>
