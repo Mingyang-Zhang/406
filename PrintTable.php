@@ -1,7 +1,7 @@
 <?php
 //根据表名，打出表头信息
 function show_table_info($table_name){
-$conn=mysql_connect("localhost","root","thebestweare");
+$conn=mysql_connect("localhost","$db_username","thebestweare");
 if(!$conn){
 die("数据库连接失败".mysql_error());
 }
