@@ -1,6 +1,6 @@
 <?php
 header("Content-type:text/html;charset=utf");
-$con=mysql_connect("localhost","root","thebestweare") or die('Could not connect: ' . mysql_error());
+$con=mysql_connect("localhost","root","$db_password") or die('Could not connect: ' . mysql_error());
 //mysql_select_db("smarthome",$con); 
 // $temperature = 0;
 // if(isset($_GET['temperature']))
