@@ -3,7 +3,6 @@ require_once 'login.php';
 header("Content-type:text/html;charset=utf");
 mysql_connect("localhost","root",$db_password) or die("401");
 mysql_select_db("smart_home");
-echo $db_password;
 $temperature = 0;
 $token = "toekn";
 $token = $_GET['token'];
