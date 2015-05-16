@@ -5,10 +5,11 @@ $con=mysql_connect("localhost","root",$db_password) or die('Could not connect: '
 mysql_select_db("smart_home",$con);
 mysql_select_db("smarthome",$con); 
 $press = 0;
+echo $press;
 if(isset($_GET['press']))
 {
 	$press = $_GET['press'];
-	echo $temperature;
+	echo $press;
 	$querytemp = "UPDATE Press SET pressure = $press WHERE room = 406";
 	mysql_query($querytemp) or die('Could not connect: ' . mysql_error());
 }
