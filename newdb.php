@@ -9,7 +9,11 @@ if (!$con)
 mysql_select_db("smart_home",$con);
 $sql = "CREATE TABLE Press
 (
+<<<<<<< HEAD
 pressure int，
+=======
+pressure int,
+>>>>>>> 4043d2b985c6c3779490687e29a0bf6a9d6796d7
 room int
 )";
 mysql_query($sql,$con);
