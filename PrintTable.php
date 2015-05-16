@@ -1,8 +1,7 @@
 <?php
 //根据表名，打出表头信息
-require_once 'login.php';
+include('login.php');
 function show_table_info($table_name){
-require_once 'login.php';
 $conn=mysql_connect("localhost",$db_username,$db_password);
 if(!$conn){
 die("数据库连接失败".mysql_error());
