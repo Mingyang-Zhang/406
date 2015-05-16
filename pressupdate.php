@@ -11,7 +11,6 @@ header("Content-type:text/html;charset=utf");
 // 	mysql_query($querytemp) or die('Could not connect: ' . mysql_error());
 // }
 $con=mysql_connect("localhost","root",$db_password) or die('Could not connect: ' . mysql_error());
-if (!$con)
 mysql_select_db("smart_home",$con);
 mysql_query("INSERT INTO Press (pressure) 
 VALUES (100)") or die('Could not connect: ' . mysql_error());
