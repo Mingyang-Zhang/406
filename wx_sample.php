@@ -1,4 +1,5 @@
 <?php
+require_once 'login.php';
 /**
   * wechat php test
   */
@@ -66,7 +67,7 @@ class wechatCallbackapiTest
                 	$contentStr = "看我变！";
                 	
 /**/                   
-			$conn = mysql_connect("localhost".":"."3306","root","thebestweare");
+			$conn = mysql_connect("localhost".":"."3306","root",$db_password);
 			mysql_select_db("smart_home",$conn);
 			$result = mysql_query("select * from comd");
 			$row = mysql_fetch_array($result);

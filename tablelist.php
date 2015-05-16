@@ -1,5 +1,6 @@
 <?php
-$con=mysql_connect("localhost","root","thebestweare") or die("401");
+require_once 'login.php';
+$con=mysql_connect("localhost","root",$db_password) or die("401");
 if (!$con)
  {
   die('Could not connect: ' . mysql_error());

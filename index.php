@@ -1,6 +1,7 @@
 <?php
+require_once 'login.php';
 header("Content-type:text/html;charset=utf");
-mysql_connect("localhost","root","$db_password") or die("401");
+mysql_connect("localhost","root",$db_password) or die("401");
 mysql_select_db("smart_home");
 
 $temperature = 0;
