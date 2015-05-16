@@ -16,7 +16,7 @@ mysql_select_db("smart_home",$con);
 mysql_query("INSERT INTO Press (pressure) 
 VALUES (100)") or die('Could not connect: ' . mysql_error());
 mysql_query("INSERT INTO Press (room) 
-VALUES ("406")") or die('402');
+VALUES (406)") or die('402');
  //$result = mysql_query("SELECT * FROM Pressure");
 // while($row = mysql_fetch_array($result))
 //   {
