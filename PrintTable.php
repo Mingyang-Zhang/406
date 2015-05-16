@@ -1,6 +1,7 @@
 <?php
 //根据表名，打出表头信息
 include('login.php');
+echo $db_password;
 function show_table_info($table_name){
 $conn=mysql_connect("localhost",$db_username,$db_password);
 if(!$conn){
