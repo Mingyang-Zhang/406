@@ -1,8 +1,9 @@
 <?php
 //根据表名，打出表头信息
 include('login.php');
-echo $db_password;
 function show_table_info($table_name){
+global $db_username;
+global $db_password;
 $conn=mysql_connect("localhost",$db_username,$db_password);
 if(!$conn){
 die("数据库连接失败".mysql_error());
