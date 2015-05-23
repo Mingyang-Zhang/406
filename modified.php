@@ -9,6 +9,6 @@ mysql_select_db("smart_home",$con);
 //$con=mysql_connect("localhost","root",$db_password) or die('Could not connect: ' . mysql_error());
 //mysql_select_db("smart_home",$con);
 mysql_query("INSERT INTO location (id) 
-VALUES ('0')") or die('insert failed');
+VALUES (0)") or die('insert failed');
 mysql_close($con);
 ?>
