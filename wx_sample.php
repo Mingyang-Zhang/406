@@ -67,10 +67,18 @@ class wechatCallbackapiTest
                         </xml>";
             if($msgType=="event"){
 				if(strtolower($event)=="location") {
-					$sql="update location set latitude=".$latitude."and longitude=".$longitude."where id=0";
-					mysql_query($sql);           	
+					$ak='h7p0MWaFlrnxopif9xVAwiv3';
+					$home='116.329941,40.004112';//目标位置
+					$waypoints=$home.';'.$longitude.','.$latitude;
+					$distance =$this->getDistance($waypoints,$ak);  //获取距离
+					$sql="update location set latitude=$latitude where id=0"; 
+					mysql_query($sql); 
+					$sql="update location set longitude=$longitude where id=0";
+					mysql_query($sql);
+					$sql="update location set distance=$distance where id=0";
+					mysql_query($sql);
             		$res = mysql_query("select * from Press");
-            		$contentStr="";
+            		$contentStr=$latitude."\n".$longitude;
                 	while($rows = mysql_fetch_assoc($res)){
             		if($rows[pressure]>400 && $rows[flag]==0){
             			mysql_query("update Press set flag=1 where room=406");
@@ -128,6 +136,27 @@ class wechatCallbackapiTest
             echo "";
             exit;
     	}
+    }
+    
+    
+    function getDistance($waypoints,$ak)//调用百度API
+    {
+    	$url="http://api.map.baidu.com/telematics/v3/distance?waypoints=$waypoints&ak=$ak";
+    	$ch = curl_init();
+    	curl_setopt($ch, CURLOPT_URL, $url);
+    	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+    	curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
+    	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    	$result = curl_exec($ch);
+    	curl_close($ch);
+    
+    	$getObj=simplexml_load_string($result);
+    
+    	if($getObj->status=='Success')
+    	{
+    		return $getObj->results->distance;
+    	}else
+    		return "";
     }
 }
 ?>
