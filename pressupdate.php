@@ -4,12 +4,14 @@ header("Content-type:text/html;charset=utf");
 $con=mysql_connect("localhost","root",$db_password) or die('Could not connect: ' . mysql_error());
 mysql_select_db("smart_home",$con);
 $press = 0;
+$ledctr="<a";
 if(isset($_GET['press']))
 {
 	$id=$_GET['id'];
 	$press = $_GET['press'];
-	if($id==0 and $press<100) echo "<b";
-	if($id==0 and $press>=100) echo "<a";
+	if($id==0 and $press<100) $ledctr="<b";
+	if($id==0 and $press>=100) $ledctr="<a";
+	if($id==1) echo $ledctr;
 	$querytemp = "UPDATE Press SET pressure = $press WHERE id = $id";
 	mysql_query($querytemp) or die('Could not connect: ' . mysql_error());
 	//mysql_query("DELETE FROM Press WHERE pressure='100'");
