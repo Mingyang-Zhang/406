@@ -1,8 +1,4 @@
 <?php
-/*
-    方倍工作室 http://www.cnblogs.com/txw1958/
-    CopyRight 2013 www.doucube.com  All Rights Reserved
-*/
 
 define("TOKEN", "weixin");
 $wechatObj = new wechatCallbackapiTest();
@@ -60,22 +56,19 @@ class wechatCallbackapiTest
                         <Content><![CDATA[%s]]></Content>
                         <FuncFlag>0</FuncFlag>
                         </xml>";
-            if($keyword == "hi")
-            {
-            $conn = mysql_connect("localhost".":"."3306","root","thebestweare");
-            mysql_select_db("smart_home",$conn);
-            $res = mysql_query("select * from Press where pressure>100");
-            $contentStr="";
-            $msgType = "text";
-            while($rows = mysql_fetch_assoc($res){
-            	$contentStr=$contentStr." ".$rows[pressure];
-            }
-            
+            if($keyword == "hi"){
+            	$conn = mysql_connect("localhost".":"."3306","root","thebestweare");
+            	mysql_select_db("smart_home",$conn);
+            	$res = mysql_query("select * from Press where pressure>100");
+            	$contentStr="";
+            	$msgType = "text";
+            	while($rows = mysql_fetch_assoc($res){
+            		$contentStr=$contentStr." ".$rows[pressure];
+            	}
             	$msgType = "text";
             	$resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
-            	echo $resultStr;          	
-            }elseif($keyword == "?" || $keyword == "？")
-            {
+            	echo $resultStr;
+            }elseif($keyword == "?" || $keyword == "？"){
                 $msgType = "text";
                 $contentStr = date("Y-m-d H:i:s",time());
                 $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
