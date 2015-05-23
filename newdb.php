@@ -7,14 +7,11 @@ if (!$con)
   die('Could not connect: ' . mysql_error());
  }
 mysql_select_db("smart_home",$con);
-$sql = "CREATE TABLE Press
+$sql = "CREATE TABLE location
 (
-<<<<<<< HEAD
-pressure int，
-=======
-pressure int,
->>>>>>> 4043d2b985c6c3779490687e29a0bf6a9d6796d7
-room int
+	latitude double(15,20)，
+	longitude double(15,20),
+	id int(1)
 )";
 mysql_query($sql,$con);
 mysql_close($con);
