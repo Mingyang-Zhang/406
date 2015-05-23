@@ -50,6 +50,12 @@ class wechatCallbackapiTest
             $keyword = trim($postObj->Content);
             $msgType = $postObj->MsgType;			//消息类型
             $event = $postObj->Event;			//事件类型
+            $latitude = trim($postObj->Latitude);		//地理位置纬度
+            $longitude = trim($postObj->Longitude);	//地理位置经度
+            $location_X = trim($postObj->Location_X);	//地理位置纬度
+            $location_Y = trim($postObj->Location_Y);	//地理位置经度
+            $scale = trim($postObj->Scale);			//地图缩放大小
+            $label = trim($postObj->Label);			//描述信息
             $time = time();
             $textTpl = "<xml>
                         <ToUserName><![CDATA[%s]]></ToUserName>
@@ -60,10 +66,12 @@ class wechatCallbackapiTest
                         <FuncFlag>0</FuncFlag>
                         </xml>";
             if($msgType=="event"){
-				if(strtolower($event)=="location") {           	
-            	$res = mysql_query("select * from Press");
-            	$contentStr="";
-                while($rows = mysql_fetch_assoc($res)){
+				if(strtolower($event)=="location") {
+					$sql="update location set latitude=".$latitude."and longitude=".$longitude."where id=0";
+					mysql_query($sql);           	
+            		$res = mysql_query("select * from Press");
+            		$contentStr="";
+                	while($rows = mysql_fetch_assoc($res)){
             		if($rows[pressure]>400 && $rows[flag]==0){
             			mysql_query("update Press set flag=1 where room=406");
             			$msgType = "text";
@@ -106,6 +114,16 @@ class wechatCallbackapiTest
 					echo $resultStr;
 	    		}
 			}
+			else if ($msgType=="location") 
+			{
+                $msgType = "text";           //回复消息的类型
+                $contentStr = "纬度：".$location_X."\n";
+                $contentStr = $contentStr."经度：".$location_Y."\n";
+                $contentStr = $contentStr."地图缩放大小：".$scale."\n";
+                $contentStr = $contentStr."描述信息：".$label;
+                $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
+                echo $resultStr;
+            }
         }else{
             echo "";
             exit;
