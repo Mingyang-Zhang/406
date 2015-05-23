@@ -32,15 +32,15 @@ class wechatCallbackapiTest
         $postStr = $GLOBALS["HTTP_RAW_POST_DATA"];
 
         if (!empty($postStr)){
-            $postObj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
-            $conn = mysql_connect("localhost".":"."3306","root","thebestweare");
-	    mysql_select_db("smart_home",$conn);
-	    $res = mysql_query("select * from Press where pressure>100");
-	    $contentStr="";
-	    $msgType = "text";
-	    while($rows = mysql_fetch_assoc($res){
-	    	$contentStr=$contentStr." ".$rows[pressure];
-	    }
+            //$postObj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
+           // $conn = mysql_connect("localhost".":"."3306","root","thebestweare");
+	   // mysql_select_db("smart_home",$conn);
+	  //  $res = mysql_query("select * from Press where pressure>100");
+	  //  $contentStr="";
+	   // $msgType = "text";
+	   // while($rows = mysql_fetch_assoc($res){
+	   // 	$contentStr=$contentStr." ".$rows[pressure];
+	   // }
             $fromUsername = $postObj->FromUserName;
             $toUsername = $postObj->ToUserName;
             $keyword = trim($postObj->Content);
@@ -57,9 +57,9 @@ class wechatCallbackapiTest
             {
                 $msgType = "text";
                 $contentStr = date("Y-m-d H:i:s",time());
-             }
-            $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
-            echo $resultStr;
+                         $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
+            echo $resultStr;}
+
         }else{
             echo "";
             exit;
