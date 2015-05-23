@@ -60,7 +60,20 @@ class wechatCallbackapiTest
                         <Content><![CDATA[%s]]></Content>
                         <FuncFlag>0</FuncFlag>
                         </xml>";
-            if($keyword == "?" || $keyword == "？")
+            $postObj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
+            $conn = mysql_connect("localhost".":"."3306","root","thebestweare");
+            mysql_select_db("smart_home",$conn);
+            $res = mysql_query("select * from Press where pressure>100");
+            $contentStr="";
+            $msgType = "text";
+            while($rows = mysql_fetch_assoc($res){
+            	$contentStr=$contentStr." ".$rows[pressure];
+            }
+            if($contentStr!=""){
+            	$msgType = "text";
+            	$resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
+            	echo $resultStr;          	
+            }elseif($keyword == "?" || $keyword == "？")
             {
                 $msgType = "text";
                 $contentStr = date("Y-m-d H:i:s",time());
