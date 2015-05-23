@@ -9,7 +9,7 @@ header("Content-type:text/html;charset=utf");
 //mysql_query($querytemp) or die('Could not connect: ' . mysql_error());
 $con=mysql_connect("localhost","root",$db_password) or die('Could not connect: ' . mysql_error());
 mysql_select_db("smart_home",$con);
-mysql_query("INSERT INTO Press (room) 
-VALUES ('406')") or die('insert failed');
+mysql_query("INSERT INTO Press (room,id) 
+VALUES ('406','1')") or die('insert failed');
 mysql_close($con);
 ?>
