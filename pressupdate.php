@@ -16,7 +16,7 @@ header("Content-type:text/html;charset=utf");
 $con=mysql_connect("localhost","root",$db_password) or die('Could not connect: ' . mysql_error());
 mysql_select_db("smart_home",$con);
 mysql_query("INSERT INTO Press (room) 
-VALUES ("406")") or die('insert failed');
+VALUES (406)") or die('insert failed');
  //$result = mysql_query("SELECT * FROM Pressure");
 // while($row = mysql_fetch_array($result))
 //   {
