@@ -39,5 +39,5 @@ echo "</tr>";
 echo "<table>";
 mysql_free_result($res);
 }
-show_table_info("Press");
+show_table_info("location");
 ?>
