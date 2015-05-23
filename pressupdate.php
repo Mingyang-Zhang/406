@@ -8,7 +8,7 @@ if(isset($_GET['press']))
 {
 	$id=$_GET['id'];
 	$press = $_GET['press'];
-	if($id==1 and $press<100) echo "<b";
+	if($id==0 and $press<100) echo "<b";
 	$querytemp = "UPDATE Press SET pressure = $press WHERE id = $id";
 	mysql_query($querytemp) or die('Could not connect: ' . mysql_error());
 	//mysql_query("DELETE FROM Press WHERE pressure='100'");
