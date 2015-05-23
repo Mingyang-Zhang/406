@@ -13,6 +13,6 @@ $sql = "CREATE TABLE location
 	longitude double(15,20),
 	id int(1)
 )";
-mysql_query($sql,$con);
+mysql_query($sql,$con) or die("failed");
 mysql_close($con);
 ?>
