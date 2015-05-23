@@ -7,6 +7,7 @@ $press = 0;
 if(isset($_GET['press']))
 {
 	$id=$_GET['id'];
+	echo $id;
 	$press = $_GET['press'];
 	echo $press;
 	$querytemp = "UPDATE Press SET pressure = $press WHERE id = $id";
