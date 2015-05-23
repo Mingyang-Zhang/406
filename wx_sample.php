@@ -40,12 +40,14 @@ class wechatCallbackapiTest
 
     public function responseMsg()
     {
-        //$postStr = $GLOBALS["HTTP_RAW_POST_DATA"];
-        //if (!empty($postStr)){
-            //$postObj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
-            $fromUsername = "oSOIks7Vk48kGKcmR8dc7N8X9sQU";//$postObj->FromUserName;
-            $toUsername = "gh_ac29a4b32890";//$postObj->ToUserName;
-            $keyword = "hi"//trim($postObj->Content);
+        $postStr = $GLOBALS["HTTP_RAW_POST_DATA"];
+        if (!empty($postStr)){
+            $postObj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
+            $fromUsername = $postObj->FromUserName;
+            $toUsername = $postObj->ToUserName;
+            $keyword = trim($postObj->Content);
+            $msgType = $postObj->MsgType;			//消息类型
+            $event = $postObj->Event;			//事件类型
             $time = time();
             $textTpl = "<xml>
                         <ToUserName><![CDATA[%s]]></ToUserName>
@@ -55,7 +57,8 @@ class wechatCallbackapiTest
                         <Content><![CDATA[%s]]></Content>
                         <FuncFlag>0</FuncFlag>
                         </xml>";
-            if($keyword == "hi"){
+            if($msgType=="event"){
+				if(strtolower($event)=="location") {
             	$conn = mysql_connect("localhost".":"."3306","root","thebestweare");
             	mysql_select_db("smart_home",$conn);
             	$res = mysql_query("select * from Press where pressure>10");
@@ -66,6 +69,8 @@ class wechatCallbackapiTest
             	$msgType = "text";
             	$resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
             	echo $resultStr;
+				}
+            }
             }else if($keyword == "?" || $keyword == "？"){
                 $msgType = "text";
                 $contentStr = date("Y-m-d H:i:s",time());
