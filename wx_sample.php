@@ -1,12 +1,11 @@
 <?php
-/**
-  * wechat php test
-  */
+/*
+    方倍工作室 http://www.cnblogs.com/txw1958/
+    CopyRight 2013 www.doucube.com  All Rights Reserved
+*/
 
-//define your token
 define("TOKEN", "weixin");
 $wechatObj = new wechatCallbackapiTest();
-
 if (isset($_GET['echostr'])) {
     $wechatObj->valid();
 }else{
@@ -15,32 +14,40 @@ if (isset($_GET['echostr'])) {
 
 class wechatCallbackapiTest
 {
-	public function valid()
+    public function valid()
     {
         $echoStr = $_GET["echostr"];
-
-        //valid signature , option
         if($this->checkSignature()){
-        	echo $echoStr;
-        	exit;
+            echo $echoStr;
+            exit;
         }
     }
-	 
-    
+
+    private function checkSignature()
+    {
+        $signature = $_GET["signature"];
+        $timestamp = $_GET["timestamp"];
+        $nonce = $_GET["nonce"];
+
+        $token = TOKEN;
+        $tmpArr = array($token, $timestamp, $nonce);
+        sort($tmpArr, SORT_STRING);
+        $tmpStr = implode( $tmpArr );
+        $tmpStr = sha1( $tmpStr );
+
+        if( $tmpStr == $signature ){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
     public function responseMsg()
     {
         $postStr = $GLOBALS["HTTP_RAW_POST_DATA"];
 
         if (!empty($postStr)){
-            //$postObj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
-           // $conn = mysql_connect("localhost".":"."3306","root","thebestweare");
-	   // mysql_select_db("smart_home",$conn);
-	  //  $res = mysql_query("select * from Press where pressure>100");
-	  //  $contentStr="";
-	   // $msgType = "text";
-	   // while($rows = mysql_fetch_assoc($res){
-	   // 	$contentStr=$contentStr." ".$rows[pressure];
-	   // }
+            $postObj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
             $fromUsername = $postObj->FromUserName;
             $toUsername = $postObj->ToUserName;
             $keyword = trim($postObj->Content);
@@ -57,34 +64,13 @@ class wechatCallbackapiTest
             {
                 $msgType = "text";
                 $contentStr = date("Y-m-d H:i:s",time());
-                         $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
-            echo $resultStr;}
-
+                $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
+                echo $resultStr;
+            }
         }else{
             echo "";
             exit;
         }
     }
-		
-	private function checkSignature()
-	{
-        $signature = $_GET["signature"];
-        $timestamp = $_GET["timestamp"];
-        $nonce = $_GET["nonce"];	
-        		
-		$token = TOKEN;
-		$tmpArr = array($token, $timestamp, $nonce);
-		sort($tmpArr);
-		$tmpStr = implode( $tmpArr );
-		$tmpStr = sha1( $tmpStr );
-		
-		if( $tmpStr == $signature ){
-			return true;
-		}else{
-			return false;
-		}
-	}
-	
 }
-
 ?>
