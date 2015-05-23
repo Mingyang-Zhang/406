@@ -37,6 +37,7 @@ class wechatCallbackapiTest
 	    mysql_select_db("smart_home",$conn);
 	    $res = mysql_query("select * from Press where pressure>100");
 	    $contentStr="";
+	    $msgType = "text";
 	    while($rows = mysql_fetch_assoc($res){
 	    	$contentStr=$contentStr." ".$rows[pressure];
 	    }
