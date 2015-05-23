@@ -2,11 +2,11 @@
 
 define("TOKEN", "weixin");
 $wechatObj = new wechatCallbackapiTest();
-if (isset($_GET['echostr'])) {
-    $wechatObj->valid();
-}else{
+//if (isset($_GET['echostr'])) {
+//    $wechatObj->valid();
+//}else{
     $wechatObj->responseMsg();
-}
+//}
 
 class wechatCallbackapiTest
 {
@@ -40,13 +40,12 @@ class wechatCallbackapiTest
 
     public function responseMsg()
     {
-        $postStr = $GLOBALS["HTTP_RAW_POST_DATA"];
-
-        if (!empty($postStr)){
-            $postObj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
-            $fromUsername = $postObj->FromUserName;
-            $toUsername = $postObj->ToUserName;
-            $keyword = trim($postObj->Content);
+        //$postStr = $GLOBALS["HTTP_RAW_POST_DATA"];
+        //if (!empty($postStr)){
+            //$postObj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
+            $fromUsername = "oSOIks7Vk48kGKcmR8dc7N8X9sQU";//$postObj->FromUserName;
+            $toUsername = "gh_ac29a4b32890";//$postObj->ToUserName;
+            $keyword = "hi"//trim($postObj->Content);
             $time = time();
             $textTpl = "<xml>
                         <ToUserName><![CDATA[%s]]></ToUserName>
@@ -59,21 +58,25 @@ class wechatCallbackapiTest
             if($keyword == "hi"){
             	$conn = mysql_connect("localhost".":"."3306","root","thebestweare");
             	mysql_select_db("smart_home",$conn);
-            	$res = mysql_query("select * from Press where pressure>100");
+            	$res = mysql_query("select * from Press where pressure>10");
             	$contentStr="";
-            	$msgType = "text";
-            	while($rows = mysql_fetch_assoc($res){
+                while($rows = mysql_fetch_assoc($res)){
             		$contentStr=$contentStr." ".$rows[pressure];
             	}
             	$msgType = "text";
             	$resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
             	echo $resultStr;
-            }elseif($keyword == "?" || $keyword == "？"){
+            }else if($keyword == "?" || $keyword == "？"){
                 $msgType = "text";
                 $contentStr = date("Y-m-d H:i:s",time());
                 $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
                 echo $resultStr;
-            }
+            }else if($keyword=="hihi"){
+                $msgType = "text";
+                $contentStr ="fromUsername:".$fromUsername."\ntoUsername:". $toUsername;
+		$resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
+		echo $resultStr;
+	    }
         }else{
             echo "";
             exit;
