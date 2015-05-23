@@ -83,16 +83,18 @@ class wechatCallbackapiTest
             	echo $resultStr;
 				}
             }
-			else{
+			else if($msgType=="text"){
 				$res = mysql_query("select * from Press");
-				if($keyword == "ok" && $rows[flag]==1){
-					mysql_query("update Press set flag=0 where room=406");
-					$msgType = "text";
-					$contentStr = "好的，停止提醒";
-					$resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
-					echo $resultStr;					
+				while($rows = mysql_fetch_assoc($res)){
+					if($keyword == "ok" && $rows[flag]==1){
+						mysql_query("update Press set flag=0 where room=406");
+						$msgType = "text";
+						$contentStr = "好的，停止提醒";
+						$resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
+						echo $resultStr;
+					}					
 				}
-            	else if($keyword == "?" || $keyword == "？"){
+            	if($keyword == "?" || $keyword == "？"){
                 	$msgType = "text";
                 	$contentStr = date("Y-m-d H:i:s",time());
                 	$resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
