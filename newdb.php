@@ -9,7 +9,7 @@ if (!$con)
 mysql_select_db("smart_home",$con);
 $sql = "CREATE TABLE location
 (
-	latitude double(15,20)，
+	latitude double(15,20),
 	longitude double(15,20),
 	id int(1)
 )";
