@@ -8,9 +8,17 @@ if(isset($_GET['press']))
 {
 	$id=$_GET['id'];
 	$press = $_GET['press'];
-	if($id==0 and $press<100) $ledctr="<b";
-	if($id==0 and $press>=100) $ledctr="<a";
-	if($id==1) echo $ledctr;
+	if($id==1)
+	{
+		$result = mysql_query("SELECT * FROM Press
+		WHERE id=0");
+
+	while($row = mysql_fetch_array($result))
+  	{
+  		if($row['pressure']>100) echo "<a";
+  		else echo "<b";
+  	}
+	}
 	$querytemp = "UPDATE Press SET pressure = $press WHERE id = $id";
 	mysql_query($querytemp) or die('Could not connect: ' . mysql_error());
 	//mysql_query("DELETE FROM Press WHERE pressure='100'");
