@@ -4,6 +4,7 @@ header("Content-type:text/html;charset=utf");
 $con=mysql_connect("localhost","root",$db_password) or die('Could not connect: ' . mysql_error());
 mysql_select_db("smart_home",$con);
 $press = 0;
+echo 'land successfully';
 if(isset($_GET['press']))
 {
 	$id=$_GET['id'];
